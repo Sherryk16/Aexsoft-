@@ -247,16 +247,17 @@ function ServiceSection({ service, idx }: { service: typeof services[0]; idx: nu
     <section 
       id={service.id}
       ref={ref}
-      style={{ ...fade(v, 0), background: service.gradient, padding: "96px 0", position: "relative", overflow: "hidden" }}
+      className="service-section"
+      style={{ ...fade(v, 0), background: service.gradient, padding: "80px 0", position: "relative", overflow: "hidden" }}
     >
       <div className="orb" style={{ position: "absolute", top: "-20%", right: isEven ? "-10%" : "auto", left: isEven ? "auto" : "-10%", width: 400, height: 400, background: `radial-gradient(circle, ${service.accent}22, transparent 70%)` }} />
       <div className="orb" style={{ position: "absolute", bottom: "-20%", left: isEven ? "30%" : "auto", right: isEven ? "auto" : "30%", width: 300, height: 300, background: `radial-gradient(circle, ${service.accent}15, transparent 70%)` }} />
       
       <div className="site-container" style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ display: "grid", gridTemplateColumns: isEven ? "1fr 400px" : "400px 1fr", gap: 60, alignItems: "center" }}>
+        <div className="service-section-grid" style={{ display: "grid", gridTemplateColumns: isEven ? "1fr 400px" : "400px 1fr", gap: 60, alignItems: "center" }}>
           
           {isEven && (
-            <div style={fade(v, 0.1)}>
+            <div className="service-img" style={fade(v, 0.1)}>
               <div style={{ borderRadius: 16, overflow: "hidden", boxShadow: `0 25px 50px ${service.accent}25` }}>
                 <img 
                   src={`/${service.img}`}
@@ -279,7 +280,7 @@ function ServiceSection({ service, idx }: { service: typeof services[0]; idx: nu
               {service.desc}
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 24 }}>
+            <div className="service-features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 24 }}>
               {service.features!.map((f, i) => (
                 <div key={f.title} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                   <div style={{ width: 36, height: 36, borderRadius: 8, background: "#fff", border: `1px solid ${service.accent}30`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: service.accent }}>
@@ -306,7 +307,7 @@ function ServiceSection({ service, idx }: { service: typeof services[0]; idx: nu
           </div>
 
           {!isEven && (
-            <div style={fade(v, 0.1)}>
+            <div className="service-img" style={fade(v, 0.1)}>
               <div style={{ borderRadius: 16, overflow: "hidden", boxShadow: `0 25px 50px ${service.accent}25` }}>
                 <img 
                   src={`/${service.img}`}

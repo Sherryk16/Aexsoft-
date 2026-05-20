@@ -113,7 +113,7 @@ export default function PortfolioPage() {
             </p>
             
             {/* Stats */}
-            <div style={{ display: "flex", justifyContent: "center", gap: 48, marginTop: 48, paddingTop: 32, borderTop: "1px solid var(--border)" }}>
+            <div className="portfolio-stats" style={{ display: "flex", justifyContent: "center", gap: 48, marginTop: 48, paddingTop: 32, borderTop: "1px solid var(--border)" }}>
               {[
                 { num: projects.length, label: "Projects" },
                 { num: "100%", label: "Success Rate" },
@@ -174,7 +174,7 @@ export default function PortfolioPage() {
               </Link>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 24 }}>
+            <div className="projects-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 24 }}>
               {filteredProjects.map((project, i) => (
                 <div 
                   key={project.id} 

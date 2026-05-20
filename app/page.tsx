@@ -36,7 +36,7 @@ function Hero() {
       <div className="orb" style={{ position: "absolute", top: "30%", left: "40%", width: 300, height: 300, background: "radial-gradient(circle, rgba(139,92,246,0.08)", animationDuration: "9s", animationDelay: "-2s" }} />
 
       <div className="site-container" style={{ position: "relative", zIndex: 1, paddingTop: 80, paddingBottom: 80, width: "100%" }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 80, alignItems: "center" }}>
+        <div className="hero-grid grid grid-cols-1 lg:grid-cols-2" style={{ gap: 80, alignItems: "center" }}>
           <div>
             <h1 style={{ ...fade(loaded, 0.08), fontFamily: "Poppins,sans-serif", fontSize: "clamp(36px,4.8vw,62px)", fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.08, letterSpacing: "-0.03em", marginBottom: 24 }}>
               We Build Digital<br />Solutions That{" "}
@@ -56,7 +56,7 @@ function Hero() {
                 View Our Work
               </Link>
             </div>
-            <div style={{ ...fade(loaded, 0.3), display: "flex", gap: 40, marginTop: 56, paddingTop: 40, borderTop: "1px solid var(--border)", flexWrap: "wrap" }}>
+            <div className="hero-stats" style={{ ...fade(loaded, 0.3), display: "flex", gap: 40, marginTop: 56, paddingTop: 40, borderTop: "1px solid var(--border)", flexWrap: "wrap" }}>
               {[{ val: "2+", label: "Years Excellence" }, { val: "50+", label: "Projects Shipped" }, { val: "100%", label: "Satisfaction Rate" }].map(s => (
                 <div key={s.label}>
                   <div style={{ fontFamily: "Poppins,sans-serif", fontSize: 30, fontWeight: 800, color: "var(--accent)", letterSpacing: "-0.03em" }}>{s.val}</div>
@@ -111,7 +111,7 @@ function Services() {
           <h2 style={{ fontFamily: "Poppins,sans-serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: 14 }}>Our Core Services</h2>
           <p style={{ fontFamily: "Inter,sans-serif", fontSize: 17, color: "var(--text-secondary)", maxWidth: 520, margin: "0 auto" }}>We build high-performance digital solutions tailored to your business needs.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 28 }}>
+        <div className="services-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 28 }}>
           {services.map((s, i) => (
             <div key={s.id} style={{ ...fade(v, i * 0.08), background: "var(--bg-card)", borderRadius: 16, overflow: "hidden", border: "1px solid var(--border)", transition: "all 300ms ease" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(0,0,0,0.1)"; }}
@@ -259,7 +259,7 @@ function Projects() {
             Explore Portfolio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </Link>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 24 }}>
+        <div className="projects-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 24 }}>
           {projects.map((p, i) => (
             <div key={p.id} className="card" style={{ ...fade(v, i * 0.1), borderRadius: 16, overflow: "hidden", border: "1px solid var(--border)", transition: "all 300ms ease" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-8px)"; e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.12)"; }}

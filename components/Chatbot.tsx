@@ -73,47 +73,14 @@ export default function Chatbot() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        style={{
-          position: "fixed",
-          bottom: 24,
-          right: 24,
-          width: 60,
-          height: 60,
-          borderRadius: "50%",
-          background: "linear-gradient(135deg, #3b82f6, #1e40af)",
-          border: "none",
-          cursor: "pointer",
-          boxShadow: "0 8px 30px rgba(59, 130, 246, 0.4)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 1000,
-          transition: "transform 0.2s ease"
-        }}
-        onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.1)")}
-        onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+        className="chatbot-btn"
       >
         <MessageCircle size={28} color="#fff" />
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div style={{
-          position: "fixed",
-          bottom: 100,
-          right: 24,
-          width: 380,
-          height: 500,
-          maxHeight: "calc(100vh - 120px)",
-          background: "var(--bg-card)",
-          borderRadius: 16,
-          boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-          border: "1px solid var(--border)",
-          display: "flex",
-          flexDirection: "column",
-          zIndex: 1000,
-          overflow: "hidden"
-        }}>
+        <div className="chatbot-window">
           {/* Header */}
           <div style={{
             padding: "16px 20px",
@@ -224,6 +191,56 @@ export default function Chatbot() {
       <style jsx>{`
         @keyframes spin {
           to { transform: rotate(360deg); }
+        }
+        .chatbot-btn {
+          position: fixed;
+          bottom: 24px;
+          right: 24px;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #3b82f6, #1e40af);
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          transition: transform 0.2s ease;
+        }
+        .chatbot-btn:hover {
+          transform: scale(1.1);
+        }
+        .chatbot-window {
+          position: fixed;
+          bottom: 100px;
+          right: 24px;
+          width: 380px;
+          height: 500px;
+          max-height: calc(100vh - 120px);
+          background: var(--bg-card);
+          border-radius: 16;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+          border: 1px solid var(--border);
+          display: flex;
+          flex-direction: column;
+          z-index: 1000;
+          overflow: hidden;
+        }
+        @media (max-width: 480px) {
+          .chatbot-btn {
+            bottom: 20px;
+            left: 20px;
+            right: auto;
+          }
+          .chatbot-window {
+            bottom: 90px;
+            left: 10px;
+            right: 10px;
+            width: auto;
+            max-width: calc(100vw - 20px);
+          }
         }
       `}</style>
     </>

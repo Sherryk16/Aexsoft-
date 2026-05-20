@@ -62,7 +62,7 @@ export default function ContactPage() {
       </section>
 
       <div className="site-container" style={{ padding: "60px 20px" }}>
-        <div style={{ 
+        <div className="contact-grid" style={{ 
           display: "grid", 
           gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", 
           gap: 40,

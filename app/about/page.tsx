@@ -104,9 +104,9 @@ function Hero() {
 function Story() {
   const { ref, v } = useReveal(0.15);
   return (
-    <section id="story" ref={ref} style={{ background: "var(--bg-surface)", padding: "96px 0" }}>
+    <section id="story" ref={ref} className="about-section" style={{ background: "var(--bg-surface)", padding: "80px 0" }}>
       <div className="site-container">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div className="story-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <div style={fade(v, 0)}>
             <span className="label-tag">Our Story</span>
             <h2 style={{ fontFamily: "Poppins,sans-serif", fontSize: "clamp(26px,3vw,40px)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: 20 }}>
@@ -119,7 +119,7 @@ function Story() {
               We don't just build apps; we architect ecosystems. Every line of code is written with scalability and maintenance in mind, ensuring that our clients' investments remain valuable for years to come.
             </p>
             
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
+            <div className="story-timeline" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
               {timeline.map((t, i) => (
                 <div key={t.year} style={{ padding: 16, background: "var(--bg)", borderRadius: 8, border: "1px solid var(--border)" }}>
                   <div style={{ fontFamily: "Poppins,sans-serif", fontSize: 12, fontWeight: 700, color: "var(--accent)", marginBottom: 6 }}>{t.year}</div>
@@ -149,7 +149,7 @@ function Story() {
 function Values() {
   const { ref, v } = useReveal(0.1);
   return (
-    <section ref={ref} style={{ background: "var(--bg)", padding: "96px 0" }}>
+    <section ref={ref} className="about-section" style={{ background: "var(--bg)", padding: "80px 0" }}>
       <div className="site-container">
         <div style={{ ...fade(v, 0), textAlign: "center", marginBottom: 52 }}>
           <span className="label-tag">What Drives Us</span>
@@ -187,7 +187,7 @@ function WhyChooseUs() {
     <section ref={ref} style={{ background: "var(--gradient-web)", padding: "96px 0", position: "relative", overflow: "hidden" }}>
       <div className="orb" style={{ position: "absolute", top: "-20%", right: "-10%", width: 400, height: 400, background: "radial-gradient(circle, rgba(14,165,233,0.15), transparent 70%)" }} />
       <div className="site-container" style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
+        <div className="whychoose-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
           <div style={fade(v, 0)}>
             <span className="label-tag" style={{ color: "#0ea5e9" }}>Why AEXSOFT</span>
             <h2 style={{ fontFamily: "Poppins,sans-serif", fontSize: "clamp(26px,3vw,40px)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: 16 }}>

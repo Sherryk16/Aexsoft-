@@ -27,7 +27,7 @@ export function Footer() {
   return (
     <footer style={{ background: "var(--bg-surface)", borderTop: "1px solid var(--border)" }}>
       <div className="site-container" style={{ paddingTop: 64, paddingBottom: 40 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48 }}>
+        <div className="footer-grid">
           {/* Brand */}
           <div>
             <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>

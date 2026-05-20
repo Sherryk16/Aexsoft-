@@ -3,9 +3,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Plus, Edit2, Trash2, Eye, EyeOff, GripVertical, 
-  Save, X, Image, ExternalLink, AlertTriangle
+  Save, X, Image, ExternalLink, AlertTriangle, Lock, LogIn
 } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+
+const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin';
 
 interface Project {
   id: string;
@@ -31,6 +34,12 @@ export default function AdminPage() {
   const [isCreating, setIsCreating] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  
+  // Auth state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  
   const [formData, setFormData] = useState({
     name: '',
     category: 'SaaS',
@@ -45,8 +54,32 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
-    fetchProjects();
+    // Check if already authenticated
+    const storedAuth = localStorage.getItem('admin_auth');
+    if (storedAuth === 'true') {
+      setIsAuthenticated(true);
+      fetchProjects();
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    if (loginForm.username === ADMIN_USERNAME && loginForm.password === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      localStorage.setItem('admin_auth', 'true');
+      setLoginError('');
+      fetchProjects();
+    } else {
+      setLoginError('Invalid username or password');
+    }
+  }
+
+  function handleLogout() {
+    setIsAuthenticated(false);
+    localStorage.removeItem('admin_auth');
+  }
 
   async function fetchProjects() {
     setLoading(true);
