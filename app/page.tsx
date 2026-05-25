@@ -267,7 +267,7 @@ function Projects() {
               <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
                 {p.image_url ? (
                   <div className="project-scroll" onMouseEnter={e => { const img = e.currentTarget.querySelector('img') as HTMLImageElement; if (img) { const scrollAmount = img.offsetHeight - 200; img.style.transform = `translateY(-${scrollAmount}px)`; } }} onMouseLeave={e => { const img = e.currentTarget.querySelector('img') as HTMLImageElement; if (img) img.style.transform = 'translateY(0)'; }}>
-                    <img src={p.image_url} alt={p.name} style={{ width: "100%", objectFit: "cover", objectPosition: "top", transition: "transform 3s ease-in-out" }} />
+                    <img src={p.image_url} alt={p.name} style={{ width: "100%", objectFit: "cover", objectPosition: "top", transition: "transform 3s ease-in-out" }} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                   </div>
                 ) : (
                   <div style={{ width: "100%", height: 200, background: `linear-gradient(135deg, ${p.color}15, ${p.color}05)`, display: "flex", alignItems: "center", justifyContent: "center" }}>

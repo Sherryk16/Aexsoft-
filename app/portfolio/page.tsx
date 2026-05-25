@@ -217,6 +217,7 @@ export default function PortfolioPage() {
                           src={project.image_url} 
                           alt={project.name} 
                           style={{ width: "100%", objectFit: "cover", objectPosition: "top", transition: "transform 3s ease-in-out" }}
+                          onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                         />
                       </div>
                     ) : (

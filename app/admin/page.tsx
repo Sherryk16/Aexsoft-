@@ -54,14 +54,11 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
-    // Check if already authenticated
     const storedAuth = localStorage.getItem('admin_auth');
     if (storedAuth === 'true') {
       setIsAuthenticated(true);
-      fetchProjects();
-    } else {
-      setLoading(false);
     }
+    fetchProjects();
   }, []);
 
   function handleLogin(e: React.FormEvent) {
@@ -89,11 +86,11 @@ export default function AdminPage() {
       return;
     }
     
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .order('display_order', { ascending: true });
+    const { data, error } = await supabase.rpc('get_all_projects');
     
+    if (error) {
+      console.error('fetchProjects error:', error.message);
+    }
     setProjects(data || []);
     setLoading(false);
   }
@@ -125,19 +122,27 @@ export default function AdminPage() {
         .update({ ...projectData, updated_at: new Date().toISOString() })
         .eq('id', editingProject.id);
       
-      if (!error) {
-        setEditingProject(null);
-        fetchProjects();
+      if (error) {
+        console.error('Update error:', error);
+        alert('Failed to update: ' + error.message);
+        setSaving(false);
+        return;
       }
+      setEditingProject(null);
+      fetchProjects();
     } else {
       const { error } = await supabase
         .from('projects')
         .insert(projectData);
       
-      if (!error) {
-        setIsCreating(false);
-        fetchProjects();
+      if (error) {
+        console.error('Insert error:', error);
+        alert('Failed to create: ' + error.message);
+        setSaving(false);
+        return;
       }
+      setIsCreating(false);
+      fetchProjects();
     }
     
     setSaving(false);
@@ -206,32 +211,28 @@ export default function AdminPage() {
   }
 
   async function uploadImage(file: File): Promise<string | null> {
-    if (!supabase || !isSupabaseConfigured) {
-      alert('Supabase not configured');
-      return null;
-    }
-    
     setUploading(true);
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
-    
-    const { data, error } = await supabase.storage
-      .from('project-images')
-      .upload(fileName, file);
-    
-    setUploading(false);
-    
-    if (error) {
-      console.error('Upload error:', error);
-      alert('Failed to upload image: ' + error.message);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
+
+      if (!res.ok) {
+        const err = await res.json();
+        alert('Failed to upload image: ' + err.error);
+        return null;
+      }
+
+      const data = await res.json();
+      return data.url;
+    } catch (err: any) {
+      alert('Failed to upload image: ' + err.message);
       return null;
+    } finally {
+      setUploading(false);
     }
-    
-    const { data: urlData } = supabase.storage
-      .from('project-images')
-      .getPublicUrl(fileName);
-    
-    return urlData.publicUrl;
   }
 
   async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
@@ -456,7 +457,7 @@ export default function AdminPage() {
                 />
                 {formData.image_url && (
                   <div style={{ marginTop: 12, position: "relative" }}>
-                    <img src={formData.image_url} alt="Preview" style={{ width: "100%", maxHeight: 150, objectFit: "cover", borderRadius: 6, border: "1px solid var(--border)" }} />
+                    <img src={formData.image_url} alt="Preview" style={{ width: "100%", maxHeight: 150, objectFit: "cover", borderRadius: 6, border: "1px solid var(--border)" }} onError={e => { (e.target as HTMLImageElement).src = ''; }} />
                     <button 
                       type="button"
                       onClick={() => setFormData({...formData, image_url: ''})}
@@ -529,7 +530,7 @@ export default function AdminPage() {
                   <td style={{ padding: "16px 20px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                       {project.image_url ? (
-                        <img src={project.image_url} alt="" style={{ width: 48, height: 48, borderRadius: 6, objectFit: "cover" }} />
+                        <img src={project.image_url} alt="" style={{ width: 48, height: 48, borderRadius: 6, objectFit: "cover" }} onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       ) : (
                         <div style={{ width: 48, height: 48, borderRadius: 6, background: "var(--bg)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                           <Image size={20} style={{ color: "var(--text-muted)" }} />
