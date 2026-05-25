@@ -277,7 +277,7 @@ function Projects() {
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%)", pointerEvents: "none" }} />
                 <span style={{ position: "absolute", top: 12, left: 12, fontFamily: "Inter,sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", background: p.color, color: "#fff", padding: "4px 8px", borderRadius: 4 }}>{p.category}</span>
                 {p.project_url && (
-                  <a href={p.project_url} target="_blank" rel="noopener noreferrer" style={{ position: "absolute", bottom: 12, right: 12, width: 36, height: 36, background: "#fff", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
+                  <a href={p.project_url.startsWith('http') ? p.project_url : `https://${p.project_url}`} target="_blank" rel="noopener noreferrer" style={{ position: "absolute", bottom: 12, right: 12, width: 36, height: 36, background: "#fff", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
                     <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth={2}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
                   </a>
                 )}

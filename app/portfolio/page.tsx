@@ -233,7 +233,7 @@ export default function PortfolioPage() {
                     </span>
                     {project.project_url && (
                       <a 
-                        href={project.project_url}
+                        href={project.project_url.startsWith('http') ? project.project_url : `https://${project.project_url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
