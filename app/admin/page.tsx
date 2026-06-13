@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Plus, Edit2, Trash2, Eye, EyeOff, GripVertical, 
-  Save, X, Image, ExternalLink, AlertTriangle, Lock, LogIn
+  Save, X, Image, ExternalLink, AlertTriangle, Lock, LogIn, Cpu
 } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
@@ -34,6 +34,7 @@ export default function AdminPage() {
   const [isCreating, setIsCreating] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [reindexing, setReindexing] = useState(false);
   
   // Auth state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -93,6 +94,22 @@ export default function AdminPage() {
     }
     setProjects(data || []);
     setLoading(false);
+  }
+
+  async function handleReindex() {
+    setReindexing(true);
+    try {
+      const res = await fetch('/api/rag/ingest', { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        alert(`RAG knowledge base re-indexed! ${data.totalChunks} chunks created.`);
+      } else {
+        alert('Re-index failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch {
+      alert('Failed to re-index. Check console for details.');
+    }
+    setReindexing(false);
   }
 
   async function handleSave() {
@@ -322,6 +339,15 @@ export default function AdminPage() {
             <Link href="/portfolio" style={{ padding: "10px 20px", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, color: "var(--text-primary)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
               View Site
             </Link>
+            <button
+              onClick={handleReindex}
+              disabled={reindexing}
+              style={{ padding: "10px 20px", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, color: "var(--text-primary)", fontSize: 14, fontWeight: 500, cursor: reindexing ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 8, opacity: reindexing ? 0.6 : 1 }}
+              title="Re-index RAG knowledge base"
+            >
+              <Cpu size={16} />
+              {reindexing ? 'Indexing...' : 'Re-index AI'}
+            </button>
             <button 
               onClick={() => { resetForm(); setIsCreating(true); }}
               style={{ padding: "10px 20px", background: "var(--accent)", border: "none", borderRadius: 6, color: "#fff", fontSize: 14, fontWeight: 500, cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }}
